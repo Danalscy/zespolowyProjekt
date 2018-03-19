@@ -2,7 +2,7 @@ import os
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = '/home/pawel/Programowanie/Python3/Zespol2/static/files' #TU ZMIENIC SCIEZKE DO FOLDERU GDZIE SIE UPLOADUJE
+UPLOAD_FOLDER = '/home/static/files' #TU ZMIENIC SCIEZKE DO FOLDERU GDZIE SIE UPLOADUJE
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 app = Flask(__name__)
