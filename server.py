@@ -19,13 +19,13 @@ def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            flash('No file part')
+            flash('Nie wybrano pliku')
             return redirect(request.url)
         file = request.files['file']
         # if user does not select file, browser also
         # submit a empty part without filename
         if file.filename == '':
-            flash('No selected file')
+            flash('Nie wybrano pliku')
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
@@ -34,11 +34,11 @@ def upload_file():
                                     filename=filename))
     return '''
     <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
+    <title>Wgraj plik z pismem</title>
+    <h1>Wgraj plik z pismem</h1>
     <form method=post enctype=multipart/form-data>
       <p><input type=file name=file>
-         <input type=submit value=Upload>
+         <input type=submit value=Wgraj!>
     </form>
     '''
 
@@ -47,7 +47,7 @@ def uploaded_file():
     filename = request.args['filename']
     full_filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     return '''
-    GRATULACJE!!!1
+    GRATULACJE!
     '''
 
 
