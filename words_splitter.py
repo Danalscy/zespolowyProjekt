@@ -6,8 +6,7 @@ def split_lines_to_words(path_to_file, lines_indexes):
 
     img = cv2.imread(path_to_file)
     img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-
-    kernel = np.ones((100,5), np.uint8)
+    kernel = np.ones((100,8), np.uint8)
 
     for upp, down in lines_indexes:
         words_in_line = split_line_to_words(img[upp:down,:], kernel)
@@ -18,7 +17,6 @@ def split_lines_to_words(path_to_file, lines_indexes):
 
 def split_line_to_words(line, kernel):
     list_of_words = []
-
     ret, thresh = cv2.threshold(line,127,255,cv2.THRESH_BINARY_INV)
     img_dilation = cv2.dilate(thresh, kernel, iterations=1)
     im2, ctrs, hier = cv2.findContours(img_dilation.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)

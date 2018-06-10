@@ -8,7 +8,7 @@ do
   #echo $(basename "$d")
   mkdir "errorData/$dire"
 
-  for file in $(ls $d | sort -R | tail -100)
+  for file in $(ls $d | sort -n | tail -500 | sort -R | tail -100)
   do
     cp $d/$file errorData/$dire/$file
   done

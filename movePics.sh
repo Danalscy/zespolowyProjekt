@@ -8,7 +8,7 @@ do
   #echo $(basename "$d")
   mkdir "trainingData/$dire"
 
-  for file in $(ls $d | sort -n | head -350)
+  for file in $(ls $d | sort -n | head -200)
   do
     cp $d/$file trainingData/$dire/$file
   done

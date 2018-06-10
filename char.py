@@ -120,21 +120,23 @@ def processImg(img):
     img = cv2.resize(img,(SZ,SZ),interpolation = cv2.INTER_NEAREST)
     return img
 
-def predict(pathToImg):
+def predict(img):
         
     clf = joblib.load('alphabet.pkl') 
-    img = cv2.imread(pathToImg,0)
-    I = cv2.imread(pathToImg)
+    #img = cv2.imread(pathToImg,0)
+    #I = cv2.imread(pathToImg)
     hog = getHog()    
 
+    cv2.imshow('word',img)
     img = cv2.GaussianBlur(img,(1,1),0)
     ret,th = cv2.threshold(img,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
     image, contours, hierarchy = cv2.findContours(th,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+    contours,bounding = sort_contours(contours)
     img = cv2.drawContours(img, contours, -1, (0,255,0), 3)
-    
+    ascii_word = "" 
     for contour in contours:
     	[x, y, w, h] = cv2.boundingRect(contour)
-    	print (x,y,w,h)
+    	#print (x,y,w,h)
  		
     	if (True): 
     		crop_img = img[y:y+h,x:x+w]
@@ -143,17 +145,27 @@ def predict(pathToImg):
     		descriptor = getFeatures(hog,crop_img);
     		descriptor = np.transpose(descriptor)
     		predicted = clf.predict(descriptor)
-    		print (predicted, getValueOf(predicted))
-    	
+    		#print (predicted, getValueOf(predicted))
+    		ascii_word += getValueOf(predicted)
     		#cv2.waitKey(0)
     		#cv2.destroyAllWindows()
         	# draw rectangle around contour on original image
-    		cv2.rectangle(I, (x, y), (x + w, y + h), (0, 255, 0), 1)
-    		cv2.putText(I,getValueOf(predicted),(int((x+x+w)/2),y+h+15),cv2.FONT_HERSHEY_SIMPLEX,0.65,(0,255,0),3)
+    		cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 1)
+    		#cv2.putText(img,getValueOf(predicted),(int((x+x+w)/2),y+h+15),cv2.FONT_HERSHEY_SIMPLEX,0.65,(0,255,0),3)
     
-    cv2.imshow('edges',I)
+    cv2.imshow('edges',img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+    return ascii_word
+
+def sort_contours(cnts):
+    reverse = False
+    i = 0
+
+    boundingBoxes = [cv2.boundingRect(c) for c in cnts]
+    (cnts, boundingBoxes) = zip(*sorted(zip(cnts, boundingBoxes),key=lambda b:b[1][i], reverse=reverse))
+
+    return (cnts, boundingBoxes)
     """
     cv2.imshow('edges',I)
     cv2.waitKey(0)
