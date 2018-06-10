@@ -24,6 +24,7 @@ for word in tab:
 	if (new_lines[line_index] == word_counter):
 		text += string_word + '\n'
 		line_index += 1
+		word_counter = 0
 	else:
 		text += string_word + " "
 	#cv2.waitKey(1000)
