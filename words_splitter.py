@@ -3,6 +3,7 @@ import numpy as np
 
 def split_lines_to_words(path_to_file, lines_indexes):
     list_of_words = []
+    words_number_in_line = []
 
     img = cv2.imread(path_to_file)
     img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
@@ -10,10 +11,11 @@ def split_lines_to_words(path_to_file, lines_indexes):
 
     for upp, down in lines_indexes:
         words_in_line = split_line_to_words(img[upp:down,:], kernel)
+        words_number_in_line.append(len(words_in_line))
         for word in words_in_line:
        	    list_of_words.append(word)
 
-    return list_of_words
+    return (list_of_words, words_number_in_line)
 
 def split_line_to_words(line, kernel):
     list_of_words = []
