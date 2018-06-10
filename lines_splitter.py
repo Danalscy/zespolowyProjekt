@@ -53,5 +53,9 @@ def calculate_lines_indexes(path_to_file):
 
     uppers, lowers = prepare_lines_indexes(uppers, lowers)
 
-    return list(zip(uppers,lowers))
+    indexes =  list(zip(uppers,lowers))
+    print(indexes)
+    for i, (upp, down) in enumerate(indexes):
+        indexes[i] = (upp - 2, down + 2)
+    return indexes
 
