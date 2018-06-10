@@ -6,7 +6,7 @@ def split_lines_to_words(path_to_file, lines_indexes):
 
     img = cv2.imread(path_to_file)
     img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-    kernel = np.ones((100,8), np.uint8)
+    kernel = np.ones((100,15), np.uint8)
 
     for upp, down in lines_indexes:
         words_in_line = split_line_to_words(img[upp:down,:], kernel)

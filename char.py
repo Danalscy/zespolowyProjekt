@@ -140,6 +140,7 @@ def predict(img):
  		
     	if (True): 
     		crop_img = img[y:y+h,x:x+w]
+    		#crop_img = img[y-5:y+h+5,x-5:x+w+5]
     		crop_img = processImg(crop_img)
     		#cv2.imshow('Letter',crop_img)
     		descriptor = getFeatures(hog,crop_img);
@@ -150,7 +151,7 @@ def predict(img):
     		#cv2.waitKey(0)
     		#cv2.destroyAllWindows()
         	# draw rectangle around contour on original image
-    		cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 1)
+    		cv2.rectangle(img, (x, y), (x + w , y + h ), (0, 255, 0), 1)
     		#cv2.putText(img,getValueOf(predicted),(int((x+x+w)/2),y+h+15),cv2.FONT_HERSHEY_SIMPLEX,0.65,(0,255,0),3)
     
     cv2.imshow('edges',img)
