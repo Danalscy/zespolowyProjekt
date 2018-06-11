@@ -19,6 +19,8 @@ def split_lines_to_words(path_to_file, lines_indexes):
 
 def split_line_to_words(line, kernel):
     list_of_words = []
+    #cv2.imshow('line',line)
+    #cv2.waitKey(0)
     ret, thresh = cv2.threshold(line,127,255,cv2.THRESH_BINARY_INV)
     img_dilation = cv2.dilate(thresh, kernel, iterations=1)
     im2, ctrs, hier = cv2.findContours(img_dilation.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)

@@ -101,7 +101,7 @@ def processImg(img):
     
     maxSize = 0 
     x=y=w=h=0
-    """
+    """ 
     for cnt in contours:
     	#M = cv2.moments(cnt)
     	x0,y0,w0,h0 = cv2.boundingRect(cnt)
@@ -111,13 +111,16 @@ def processImg(img):
     	#cv2.rectangle(img,(x0,y0),(x0+w0,y0+h0),(0,255,0),2)
     	#if not((w == 0) or (h==0)): 
     	
-    img = img[y:y+h,x:x+w]    
+    img = img[y-3:y+h+3,x-3:x+w+3]    
     """
     #print (pathToImg) 
     #cv2.imshow('img',img)
     #cv2.waitKey(0)
     
     img = cv2.resize(img,(SZ,SZ),interpolation = cv2.INTER_NEAREST)
+    #cv2.imshow('edges',img)
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
     return img
 
 def predict(img):
@@ -127,7 +130,9 @@ def predict(img):
     #I = cv2.imread(pathToImg)
     hog = getHog()    
 
-    cv2.imshow('word',img)
+    #cv2.imshow('word',img)
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
     img = cv2.GaussianBlur(img,(1,1),0)
     ret,th = cv2.threshold(img,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
     image, contours, hierarchy = cv2.findContours(th,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
@@ -136,27 +141,25 @@ def predict(img):
     ascii_word = "" 
     for contour in contours:
     	[x, y, w, h] = cv2.boundingRect(contour)
-    	#print (x,y,w,h)
- 		
-    	if (True): 
-    		crop_img = img[y:y+h,x:x+w]
+    	#print (x,y,w,h)	
+    	if (w*h>200): 
+    		crop_img = img[y-3:y+h+3,x-2:x+w+2]
+    		#cv2.imshow('Letter',crop_img)
     		#crop_img = img[y-5:y+h+5,x-5:x+w+5]
     		crop_img = processImg(crop_img)
     		#cv2.imshow('Letter',crop_img)
     		descriptor = getFeatures(hog,crop_img);
     		descriptor = np.transpose(descriptor)
     		predicted = clf.predict(descriptor)
-    		#print (predicted, getValueOf(predicted))
+    		#print (getValueOf(predicted))
     		ascii_word += getValueOf(predicted)
+
     		#cv2.waitKey(0)
     		#cv2.destroyAllWindows()
         	# draw rectangle around contour on original image
-    		cv2.rectangle(img, (x, y), (x + w , y + h ), (0, 255, 0), 1)
+    		#cv2.rectangle(img, (x, y), (x + w , y + h ), (0, 255, 0), 1)
     		#cv2.putText(img,getValueOf(predicted),(int((x+x+w)/2),y+h+15),cv2.FONT_HERSHEY_SIMPLEX,0.65,(0,255,0),3)
     
-    cv2.imshow('edges',img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
     return ascii_word
 
 def sort_contours(cnts):

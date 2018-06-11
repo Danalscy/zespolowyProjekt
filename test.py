@@ -33,8 +33,8 @@ def test(hog):
     for i in range(1,len(labels_accuracy)):
     	char = getValueOf(i)
     	labels_accuracy[i] = labels_accuracy[i]/count_images[i]
-    	#print (char + ": " + str(labels_accuracy[i]))
-    	print (str(labels_accuracy[i]))
+    	print (char + ": " + str(labels_accuracy[i]))
+    	#print (str(labels_accuracy[i]))
 
 hog = getHog()
 test(hog)

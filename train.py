@@ -18,6 +18,10 @@ def train(hog):
                 ch = getValueOf(dir_int)
                 img = cv2.imread(pathToImg,0)
                 img = processImg(img)
+                #cv2.imshow('img',img)
+                #cv2.waitKey(0)
+                #cv2.destroyAllWindows()
+
                 descriptor = getFeatures(hog,img)
                 data.append(descriptor)
                 labels.append(dir_int)

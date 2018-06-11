@@ -17,13 +17,13 @@ text =""
 line_index = 0
 word_counter = 0
 for word in tab:
-	#cv2.imshow('img',word)
 	string_word = predict(word)
-	print (string_word)
+	#print (string_word)
 	word_counter += 1
 	if (new_lines[line_index] == word_counter):
 		text += string_word + '\n'
 		line_index += 1
+		word_counter = 0
 	else:
 		text += string_word + " "
 	#cv2.waitKey(1000)
