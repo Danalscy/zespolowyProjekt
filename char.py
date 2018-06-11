@@ -143,9 +143,9 @@ def predict(img):
     	[x, y, w, h] = cv2.boundingRect(contour)
     	#print (x,y,w,h)	
     	if (w*h>200): 
-    		crop_img = img[y-3:y+h+3,x-2:x+w+2]
+    		crop_img = img[y:y+h,x:x+w]
     		#cv2.imshow('Letter',crop_img)
-    		#crop_img = img[y-5:y+h+5,x-5:x+w+5]
+    		crop_img = img[y-3:y+h+3,x-2:x+w+2]
     		crop_img = processImg(crop_img)
     		#cv2.imshow('Letter',crop_img)
     		descriptor = getFeatures(hog,crop_img);
